@@ -247,7 +247,11 @@ void UbloxNode::getRosParams() {
   frame_id_ = this->declare_parameter("frame_id", std::string("gps"));
 
   // Save configuration parameters
-  load_.load_mask = declareRosIntParameter<uint32_t>(this, "load.mask", 1);
+  load_.load_mask = declareRosIntParameter<uint32_t>(this, "load.mask", ublox_msgs::msg::CfgCFG::MASK_IO_PORT
+                                                                      | ublox_msgs::msg::CfgCFG::MASK_MSG_MSG
+                                                                      | ublox_msgs::msg::CfgCFG::MASK_INF_MSG
+                                                                      | ublox_msgs::msg::CfgCFG::MASK_NAV_CONF
+                                                                      | ublox_msgs::msg::CfgCFG::MASK_RXM_CONF);
   load_.device_mask = declareRosIntParameter<uint8_t>(this, "load.device", 0);
   save_.save_mask = declareRosIntParameter<uint32_t>(this, "save.mask", 0);
   save_.device_mask = declareRosIntParameter<uint8_t>(this, "save.device", 0);
