@@ -91,3 +91,4 @@ gen/*
 *.app
 
 .vscode/*
+log/

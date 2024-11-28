@@ -243,7 +243,7 @@ void UbloxNode::addProductInterface(const std::string & product_category,
 }
 
 void UbloxNode::getRosParams() {
-  device_ = this->declare_parameter("device", std::string("/dev/ttyACM0"));
+  device_ = this->declare_parameter("device", std::string("/dev/ttyS0"));
   frame_id_ = this->declare_parameter("frame_id", std::string("gps"));
 
   // Save configuration parameters
@@ -253,11 +253,12 @@ void UbloxNode::getRosParams() {
   save_.device_mask = declareRosIntParameter<uint8_t>(this, "save.device", 0);
 
   // UART 1 params
-  baudrate_ = declareRosIntParameter<uint32_t>(this, "uart1.baudrate", 9600);
+  baudrate_ = declareRosIntParameter<uint32_t>(this, "uart1.baudrate", 115200);
   uart_in_ = declareRosIntParameter<uint16_t>(this, "uart1.in", ublox_msgs::msg::CfgPRT::PROTO_UBX
-                                              | ublox_msgs::msg::CfgPRT::PROTO_NMEA
-                                              | ublox_msgs::msg::CfgPRT::PROTO_RTCM);
-  uart_out_ = declareRosIntParameter<uint16_t>(this, "uart1.out", ublox_msgs::msg::CfgPRT::PROTO_UBX);
+                                                              | ublox_msgs::msg::CfgPRT::PROTO_NMEA
+                                                              | ublox_msgs::msg::CfgPRT::PROTO_RTCM);
+  uart_out_ = declareRosIntParameter<uint16_t>(this, "uart1.out", ublox_msgs::msg::CfgPRT::PROTO_UBX
+                                                                | ublox_msgs::msg::CfgPRT::PROTO_NMEA);
   // USB params
   set_usb_ = false;
   this->declare_parameter("usb.in", rclcpp::PARAMETER_INTEGER);
@@ -314,14 +315,14 @@ void UbloxNode::getRosParams() {
   // SBAS params, only for some devices
   this->declare_parameter("gnss.sbas", false);
   this->declare_parameter("gnss.gps", true);
-  this->declare_parameter("gnss.glonass", false);
-  this->declare_parameter("gnss.qzss", false);
+  this->declare_parameter("gnss.glonass", true);
+  this->declare_parameter("gnss.qzss", true);
   this->declare_parameter("gnss.galileo", false);
-  this->declare_parameter("gnss.beidou", false);
+  this->declare_parameter("gnss.beidou", true);
   this->declare_parameter("gnss.imes", false);
   max_sbas_ = declareRosIntParameter<uint8_t>(this, "sbas.max", 0); // Maximum number of SBAS channels
   sbas_usage_ = declareRosIntParameter<uint8_t>(this, "sbas.usage", 0);
-  dynamic_model_ = this->declare_parameter("dynamic_model", std::string("portable"));
+  dynamic_model_ = this->declare_parameter("dynamic_model", std::string("automotive"));
   dmodel_ = modelFromString(dynamic_model_);
   fix_mode_ = this->declare_parameter("fix_mode", std::string("auto"));
   fmode_ = fixModeFromString(fix_mode_);
@@ -368,7 +369,7 @@ void UbloxNode::getRosParams() {
   meas_rate_ = 1000 / rate_;
 
   // activate/deactivate any config
-  this->declare_parameter("config_on_startup", true);
+  this->declare_parameter("config_on_startup", false);
   this->declare_parameter("raw_data", false);
   this->declare_parameter("clear_bbr", false);
   this->declare_parameter("save_on_shutdown", false);
@@ -391,9 +392,9 @@ void UbloxNode::getRosParams() {
   // NMEA parameters
   this->declare_parameter("nmea.set", false);
   this->declare_parameter("nmea.compat", false);
-  this->declare_parameter("nmea.consider", false);
+  this->declare_parameter("nmea.consider", true);
   this->declare_parameter("nmea.limit82", false);
-  this->declare_parameter("nmea.high_prec", false);
+  this->declare_parameter("nmea.high_prec", true);
   this->declare_parameter("nmea.filter.pos", false);
   this->declare_parameter("nmea.filter.msk_pos", false);
   this->declare_parameter("nmea.filter.time", false);
