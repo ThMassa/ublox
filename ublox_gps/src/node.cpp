@@ -416,7 +416,7 @@ void UbloxNode::getRosParams() {
   this->declare_parameter("nmea.gnssToFilter.beidou", false);
 
   // Publish parameters
-  this->declare_parameter("publish.all", false);
+  this->declare_parameter("publish.all", true);
 
   this->declare_parameter("publish.nav.all", getRosBoolean(this, "publish.all"));
   this->declare_parameter("publish.nav.att", getRosBoolean(this, "publish.nav.all"));
