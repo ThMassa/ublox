@@ -416,7 +416,7 @@ void UbloxNode::getRosParams() {
   this->declare_parameter("nmea.gnssToFilter.beidou", false);
 
   // Publish parameters
-  this->declare_parameter("publish.all", false);
+  this->declare_parameter("publish.all", true);
 
   this->declare_parameter("publish.nav.all", getRosBoolean(this, "publish.all"));
   this->declare_parameter("publish.nav.att", getRosBoolean(this, "publish.nav.all"));
@@ -598,7 +598,7 @@ void UbloxNode::subscribe() {
                     ublox_msgs::Message::INF::TEST),
         ublox_msgs::Message::INF::TEST);
   }
-
+subscribe_nmea
   if (getRosBoolean(this, "inf.warning")) {
     gps_->subscribeId<ublox_msgs::msg::Inf>(
         std::bind(&UbloxNode::printInf, this, std::placeholders::_1,
@@ -623,6 +623,7 @@ void UbloxNode::subscribe() {
   }
 
   if (getRosBoolean(this, "publish.nmea")) {
+    RCLCPP_DEBUG(this->get_logger(), "subscribing to nmea");
     gps_->subscribe_nmea([this](const std::string &sentence) {
       nmea_msgs::msg::Sentence m;
       m.header.stamp = this->now();
