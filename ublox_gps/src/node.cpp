@@ -598,7 +598,7 @@ void UbloxNode::subscribe() {
                     ublox_msgs::Message::INF::TEST),
         ublox_msgs::Message::INF::TEST);
   }
-subscribe_nmea
+
   if (getRosBoolean(this, "inf.warning")) {
     gps_->subscribeId<ublox_msgs::msg::Inf>(
         std::bind(&UbloxNode::printInf, this, std::placeholders::_1,
