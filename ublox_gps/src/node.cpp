@@ -425,7 +425,7 @@ void UbloxNode::getRosParams() {
   this->declare_parameter("publish.nav.heading", getRosBoolean(this, "publish.nav.all"));
   this->declare_parameter("publish.nav.posecef", getRosBoolean(this, "publish.nav.all"));
   this->declare_parameter("publish.nav.posllh", getRosBoolean(this, "publish.nav.all"));
-  this->declare_parameter("publish.nav.pvt", getRosBoolean(this, "publish.nav.all"));
+  this->declare_parameter("publish.nav.pvt", true);
   this->declare_parameter("publish.nav.relposned", getRosBoolean(this, "publish.nav.all"));
   this->declare_parameter("publish.nav.sat", getRosBoolean(this, "publish.nav.all"));
   this->declare_parameter("publish.nav.sol", getRosBoolean(this, "publish.nav.all"));
