@@ -30,7 +30,6 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-"""Launch the ublox gps node with c94-m8p configuration."""
 
 import os
 
@@ -45,6 +44,7 @@ def generate_launch_description():
         'config')
     ublox_gps_node = launch_ros.actions.Node(package='ublox_gps',
                                              executable='ublox_gps_node',
+                                             remappings=[('/ublox_gps_node/fix','/sensor/gps')],
                                              output='both')
 
     return launch.LaunchDescription([ublox_gps_node,
