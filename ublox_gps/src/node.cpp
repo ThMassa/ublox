@@ -451,7 +451,7 @@ void UbloxNode::getRosParams() {
 
   this->declare_parameter("publish.tim.tm2", false);
 
-  this->declare_parameter("publish.nmea", true);
+  this->declare_parameter("publish.nmea", false);
 
   // INF parameters
   this->declare_parameter("inf.all", true);
